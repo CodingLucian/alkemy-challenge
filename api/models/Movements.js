@@ -1,38 +1,28 @@
 const { DataTypes } = require('sequelize');
+import db from '../config/db.js';
 
-module.exports = (sequelize) => {
-
-sequelize.define('Movements', {
+export const Movement = db.define('movements', {
     
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true 
     },
-    ingreso: {
-        type: DataTypes.NUMBER,
+    amount: {
+        type: DataTypes.FLOAT,
         allowNull: false,
     },
-    egreso: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-    },
-    balance: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-    },
-    concepto: {
+    operation: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    categoria: {
-        type: DataTypes.ENUM("comida", "servicios", "extras", "trabajo", "alquileres", "varios"),
+    category: {
+        type: DataTypes.ENUM("food", "taxes", "extras", "work", "rent", "other"),
         allowNull: false
     },
-    fecha: {
+    date: {
         type: DataTypes.DATE,
         allowNull: false
-    }
-    // timestamps: false
+    },
+    timestamps: false
 }); 
-};
