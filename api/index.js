@@ -1,29 +1,85 @@
-import express from 'express';
-import router from './routes/index.js';
-import db from './config/db.js';
-import cors from 'cors';
+const express = require('express');
+const router = express();
+const { /* Movement, */ db } = require("./db.js");
 
-const app = express();
+// router.get('/', (req, res) => {
+//     res.send('Budget');
+// });
 
-// Enable CORS
-app.use(cors());
+router.use(express.json());
 
-// Connect to DB
-db.authenticate()
-    .then( () => console.log('DB Connected'))
-    .catch( error => console.log(error));
-
-// Define port
-const port = process.env.PORT || 3001;
-
-// Body Parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Add router
-app.use('/', router);
-
-
-app.listen(port, () => {
-    console.log(`Server Working at Port: ${port}`);
+router.post('/movement', async (req, res, next)=> {
+    try {
+        await Movement.create(req.body);
+        res.json({message: 'Operation added'});
+    } catch (error) {
+        console.log(error);
+        next();
+    }
 });
+
+router.get('/movement', async (req, res, next) => {
+    try {
+        const movements = await Movement.findAll();
+        res.json(movements);
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+});
+
+router.get('/movement/:id', async (req, res, next) => {
+    try {
+        let id = req.params.id
+        const operation = await Movement.findByPk(id);
+        res.json(operation);
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+});
+
+router.put('/movement/:id', async (req, res, next) => {
+    try {
+        let id = req.params.id
+        const {category, details, amount, operation } = req.body;
+        await Movement.update(
+            {
+                category,
+                details,
+                amount,
+                operation
+            },
+            {where: 
+                {id: id}});
+
+        const movement = await Movement.findByPk(req.params.id);
+        res.json(movement);
+
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+});
+
+router.delete('/movement/:id', async (req, res, next) => {
+    try {
+        let id = req.params.id
+        await Movement.destroy({ where: 
+            {id: id}
+        });
+        res.json({mensaje: 'operation deleted'});
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+});
+
+router.listen(3001, () => {
+    console.log('server running on port 3001');
+    db.sync({force: true});
+});
+
+// module.exports = {
+//     router
+// }
