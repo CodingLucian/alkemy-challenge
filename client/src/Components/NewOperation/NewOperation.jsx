@@ -46,7 +46,7 @@ export default function NewOperation() {
   let handleSubmit = (e) => {
         e.preventDefault();
         // let token = localStorage.getItem('tokenProp');
-        fetch(`http://localhost:3001/movements`, {
+        fetch(`http://localhost:3001/movement`, {
           method: 'POST',
           headers: {
             // api: `${import.meta.env.VITE_API}`,

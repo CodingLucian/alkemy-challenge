@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express();
-const { /* Movement, */ db } = require("./db.js");
-
-// router.get('/', (req, res) => {
-//     res.send('Budget');
-// });
+const { Movement, db } = require("./db.js");
+const cors = require('cors');
 
 router.use(express.json());
+router.use(cors());
 
 router.post('/movement', async (req, res, next)=> {
     try {
-        await Movement.create(req.body);
-        res.json({message: 'Operation added'});
+        let {date, amount, operation, details, category, id} = req.body;
+        if(operation === 'out') amount = -amount;
+        const respuesta = await Movement.create({date, amount, operation, details, category, id});
+        res.json({message: 'Operation added', respuesta});
     } catch (error) {
         console.log(error);
         next();
@@ -20,8 +20,17 @@ router.post('/movement', async (req, res, next)=> {
 
 router.get('/movement', async (req, res, next) => {
     try {
-        const movements = await Movement.findAll();
-        res.json(movements);
+        const movements = await Movement.findAll({
+            // attributes:  [total,[db.fn('sum', db.col('amount')), 'total']],
+            order: [
+                ['createdAt', 'ASC'],
+            ],
+        });
+        let balance = 0;
+        movements.forEach((m) => {
+            balance += m.amount;
+        });
+        res.json({movements: movements, balance: balance});
     } catch (error) {
         console.log(error);
         next();
