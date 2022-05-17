@@ -23,7 +23,8 @@ router.get('/movement', async (req, res, next) => {
         const movements = await Movement.findAll({
             // attributes:  [total,[db.fn('sum', db.col('amount')), 'total']],
             order: [
-                ['createdAt', 'ASC'],
+                ['date', 'ASC'],
+                ['createdAt', 'ASC']
             ],
         });
         let balance = 0;

@@ -12,7 +12,7 @@ export default function ViewMovements() {
 
   return (
     <div>{
-      allMovements?.length && allMovements.map((m)=>{
+      allMovements?.movements?.length && allMovements.movements.map((m)=>{
         return <Movement 
           key={m.id}
           id= {m.id}

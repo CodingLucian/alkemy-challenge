@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styles from './NewOperation.module.css'
+import React, { useState, useEffect, useContext } from 'react';
+import styles from './NewOperation.module.css';
+import { GlobalContext } from '../../GlobalContext/GlobalContext';
+
 
 export function validate(input) {
   let errores = {};
@@ -38,6 +40,8 @@ export default function NewOperation() {
   };
   let [input, setInput] = useState(initialState);
 
+  const { getMovements } = useContext(GlobalContext);
+
       
   useEffect(() => {
     setInput(initialState);
@@ -56,7 +60,7 @@ export default function NewOperation() {
           body: JSON.stringify(input),
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => getMovements())
           .catch((error) => console.log(error));
         setInput(initialState);
         e.target.reset();

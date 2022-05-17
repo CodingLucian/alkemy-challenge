@@ -1,13 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-import NewOperation from './Components/NewOperation/NewOperation';
-import ViewMovements from './Components/ViewMovements/ViewMovements';
+// import NewOperation from './Components/NewOperation/NewOperation';
+// import ViewMovements from './Components/ViewMovements/ViewMovements';
+import NavBar from './Components/NavBar/NavBar';
+import Home from './Components/Home/Home';
+
 
 function App() {
   return (
-    <div className="App">
-      <NewOperation/>
-      <ViewMovements/>
+    <div>
+      <NavBar/>
+      <Home/>
     </div>
   );
 }

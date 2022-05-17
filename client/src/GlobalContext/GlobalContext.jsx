@@ -1,10 +1,10 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 
 export const GlobalContext = createContext();
 
 export const ContextProvider = (props) => {
   const [allMovements, setAllMovements] = useState([]);
-  const [balance, setBalance] =useState(0);
+  const [lastMov, setLastMov] = useState([]);
 
   const getMovements = () => {
     fetch(`http://localhost:3001/movement/`,
@@ -14,8 +14,14 @@ export const ContextProvider = (props) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data.length) {
+        if (data.movements.length) {
+          let aux = data.movements
           setAllMovements(data)
+          if(aux.length<11) { 
+            setLastMov(aux)
+          }else {
+            setLastMov(aux.slice((aux.length - 10), aux.length))
+          }
         } else {
           console.log("No Movements Found");
         }
@@ -30,12 +36,21 @@ export const ContextProvider = (props) => {
       });
   };
 
+  // useEffect(()=>{
+  //   console.log('lastMov', lastMov)
+  // }, [lastMov]);  
+  useEffect(()=>{
+    console.log('allMovements', allMovements);
+    console.log('lastMov', lastMov);
+  }, [allMovements])
+
   return (
     <GlobalContext.Provider
       value={{
         getMovements,
         allMovements, 
-        setAllMovements
+        setAllMovements,
+        lastMov
       }}
     >
       {props.children}
