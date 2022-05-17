@@ -52,18 +52,19 @@ router.get('/movement/:id', async (req, res, next) => {
 router.put('/movement/:id', async (req, res, next) => {
     try {
         let id = req.params.id
-        const {category, details, amount, operation } = req.body;
+        const {category, details, date, amount/* , operation */ } = req.body;
         await Movement.update(
             {
                 category,
                 details,
+                date,
                 amount,
-                operation
+                // operation
             },
             {where: 
                 {id: id}});
 
-        const movement = await Movement.findByPk(req.params.id);
+        const movement = await Movement.findByPk(id);
         res.json(movement);
 
     } catch (error) {

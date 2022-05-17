@@ -1,4 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import styles from './GlobalContext.module.css';
 
 export const GlobalContext = createContext();
 
@@ -6,6 +8,8 @@ export const ContextProvider = (props) => {
   const [allMovements, setAllMovements] = useState([]);
   const [lastMov, setLastMov] = useState([]);
 
+
+  // get from DB
   const getMovements = () => {
     fetch(`http://localhost:3001/movement/`,
       {
@@ -36,13 +40,64 @@ export const ContextProvider = (props) => {
       });
   };
 
+  // DB deletion
+  const deleteMovements = (id) => {
+    fetch(`http://localhost:3001/movement/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+      .then(() => Swal.fire('Deleted!', '', 'success'))
+      .then(()=> getMovements())
+      .catch((err) => {
+        if (err.response) {
+          const { response } = err;
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.headers);
+        }
+      });
+  };
+  
+  // Operation Deletion Confirmation alert
+  const handledelete = (id) => {
+    Swal.fire({
+      title: 'Are you sure you want to delete this operation?',
+      showDenyButton: true,
+      // showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      customClass: {
+        actions: 'my-actions',
+        // cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMovements(id)
+      } else if (result.isDenied) {
+        // Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  }
+
+  // Operation Edition 
+  const handleEdit = (id) => {
+
+  }
+
+ 
+
+
+
   // useEffect(()=>{
   //   console.log('lastMov', lastMov)
   // }, [lastMov]);  
-  useEffect(()=>{
-    console.log('allMovements', allMovements);
-    console.log('lastMov', lastMov);
-  }, [allMovements])
+  // useEffect(()=>{
+  //   console.log('allMovements', allMovements);
+  //   console.log('lastMov', lastMov);
+  // }, [allMovements])
 
   return (
     <GlobalContext.Provider
@@ -50,7 +105,9 @@ export const ContextProvider = (props) => {
         getMovements,
         allMovements, 
         setAllMovements,
-        lastMov
+        lastMov,
+        handleEdit, 
+        handledelete
       }}
     >
       {props.children}

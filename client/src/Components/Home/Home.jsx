@@ -5,9 +5,11 @@ import Movement from '../Movement/Movement';
 
 export default function Home() {
 
-  const { allMovements, lastMov } = useContext(GlobalContext);
+  const { allMovements, lastMov, getMovements } = useContext(GlobalContext);
 
-  
+  useEffect(()=>{
+    getMovements()
+  },[])
 
   return (
     <div>

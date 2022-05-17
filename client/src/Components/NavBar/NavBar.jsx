@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from '../Modal/Modal'
 import NewOperation from '../NewOperation/NewOperation';
-import AllMovements from '../AllMovements/AllMovements';
+import AllOperations from '../AllOperations/AllOperations';
 
 
 export default function NavBar() {
@@ -25,7 +25,7 @@ export default function NavBar() {
           </div>
           {!!allMovementsModal && (
             <Modal setLocalModal={setAllMovementsModal}>
-              <AllMovements />
+              <AllOperations />
             </Modal>
           )}
           {!!newMovementModal && (
