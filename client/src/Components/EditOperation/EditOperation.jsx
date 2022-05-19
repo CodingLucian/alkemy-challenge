@@ -1,21 +1,17 @@
+
 import React, { useState, useEffect, useContext } from 'react';
-import styles from './NewOperation.module.css';
+import styles from './EditOperation.module.css';
 import { GlobalContext } from '../../GlobalContext/GlobalContext';
-import { format } from 'date-fns';
+import Swal from 'sweetalert2';
 
 
 export function validate(input) {
   let errores = {};
 
-
   if (!input.amount) {
     errores.amount = 'Please enter the operation amount';
   } else if (!/^(\d+(\.\d+)?)$/.test(input.amount)) {
     errores.amount = 'The amount can only contain numbers and , . ';
-  }
-
-  if (!input.operation || input.operation === 'null') {
-    errores.operation = 'Please select operation type';
   }
 
   if (!input.category || input.category === 'null') {
@@ -25,18 +21,17 @@ export function validate(input) {
   return errores;
 }
 
-export default function NewOperation() {
+export default function EditOperation({id, amount, operation, details, category, date, setLocalModal}) {
 
+  console.log('operation', operation)
   let [error, setError] = useState({});
-  const actualDate = new Date(); 
-  const today = actualDate.toLocaleDateString('en-CA')
-  // console.log('today', today)
   const initialState = {
-    operation: '',
-    amount: '',
-    details: '',
-    date: today,
-    category: ''
+    id: id,
+    operation: operation,
+    amount: amount,
+    details: details,
+    date: date,
+    category: category
   };
   let [input, setInput] = useState(initialState);
 
@@ -47,15 +42,11 @@ export default function NewOperation() {
     setInput(initialState);
   }, []);
 
-  // useEffect(()=>{
-  //   console.log('input', input)
-  // },[input])
-
   let handleSubmit = (e) => {
         e.preventDefault();
         // let token = localStorage.getItem('tokenProp');
-        fetch(`http://localhost:3001/movement`, {
-          method: 'POST',
+        fetch(`http://localhost:3001/movement/${id}`, {
+          method: 'PUT',
           headers: {
             // api: `${import.meta.env.VITE_API}`,
             // Authorization: 'Bearer ' + token,
@@ -63,38 +54,58 @@ export default function NewOperation() {
           },
           body: JSON.stringify(input),
         })
-          .then((response) => response.json())
-          .then((data) => getMovements())
-          .catch((error) => console.log(error));
+        .then(() => Swal.fire('Edited!', '', 'success'))
+        .then((data) => getMovements())
+        .then(setLocalModal((prev) => !prev))
+        .catch((error) => console.log(error));
         setInput(initialState);
         e.target.reset();
       };
     
-  let handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-    let objError = validate({ ...input, [e.target.name]: e.target.value });
-    setError(objError);
-    // console.log(input);
-  };
+      let handleChange = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value });
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        setError(objError);
+        // console.log(input);
+      };
     
+      const confirmSubmit = (e) => {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Are you sure you want to commit the changes to this operation?',
+          showDenyButton: true,
+          // showCancelButton: true,
+          confirmButtonText: 'Yes',
+          denyButtonText: 'No',
+          customClass: {
+            actions: 'my-actions',
+            // cancelButton: 'order-1 right-gap',
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleSubmit(e)
+          } else if (result.isDenied) {
+            // Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
+      }
+
+
 
   return (
     <div className={styles.allcss}>
       <div className={styles.formulario}>
         <h1>New Transaction:</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => confirmSubmit(e)}>
           <div>{/* operation type */}
             <label>operation type: </label>
-            <select name="operation" onChange={(e) => handleChange(e)}>
-              <option value="null">Select...</option>
-              <option value="in">money in</option>
-              <option value="out">money out</option>
-            </select>
-            {error.operation && <p className={styles.error}>{error.operation}</p>}
+            <div>{operation}</div>
           </div>
           <div>{/* category */}
             <label>category: </label>
-            <select name="category" onChange={(e) => handleChange(e)}>
+            <select name="category" defaultValue={category || ''} onChange={(e) => handleChange(e)}>
               <option value="null">Select...</option>
               <option value="food">food</option>
               <option value="taxes">taxes</option>
@@ -106,28 +117,30 @@ export default function NewOperation() {
             {error.category && <p className={styles.error}>{error.category}</p>}
           </div>
           <div>{/* details */}
-             <label>Op. Details: </label>
-             <input
-               type={'text'}
-               name={'details'}
-               onChange={(e) => handleChange(e)}
-               placeholder="details..."
-             />
-             {error.details && (
-               <p className={styles.error}>{error.details}</p>
-             )}
+              <label>Op. Details: </label>
+              <input
+                type={'text'}
+                name={'details'}
+                onChange={(e) => handleChange(e)}
+                defaultValue={details || ''}
+                placeholder="details..."
+              />
+              {error.details && (
+                <p className={styles.error}>{error.details}</p>
+              )}
           </div>
           <div>{/* amount */}
-             <label>amount: </label>
-             <input
-               type="number"
-               name="amount"
-               onChange={(e) => handleChange(e)}
-               placeholder="amount..."
-             />
-             {error.amount && (
-               <p className={styles.error}>{error.amount}</p>
-             )}
+              <label>amount: </label>
+              <input
+                type="number"
+                name="amount"
+                onChange={(e) => handleChange(e)}
+                defaultValue={amount<0? -amount : amount}
+                placeholder="amount..."
+              />
+              {error.amount && (
+                <p className={styles.error}>{error.amount}</p>
+              )}
           </div>
           <div>{/* date */}
             <label>date: </label>
@@ -135,14 +148,13 @@ export default function NewOperation() {
               type="date"
               name="date"
               onChange={(e) => handleChange(e)}
-              defaultValue={today}
+              defaultValue={date || ''}
             />
             {error.date && (
               <p className={styles.error}>{error.date}</p>
             )}
           </div>
           <div> {       
-            error.operation ||
             error.category ||
             error.details ||
             error.amount

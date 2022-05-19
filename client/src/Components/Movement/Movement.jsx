@@ -1,22 +1,56 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './Movement.module.css'
 import { GlobalContext } from '../../GlobalContext/GlobalContext';
+import { Modal } from '../ModalEdit/ModalEdit';
+import EditOperation from '../EditOperation/EditOperation';
 
 export default function Movement({id, amount, operation, details, category, date, edit}) {
 
-  const { handleEdit, handledelete } = useContext(GlobalContext);
+  const { handledelete } = useContext(GlobalContext);
+ 
+  // Operation Edition 
+  const [editMovementModal, setEditMovementModal] = useState(false);
 
+  const onClickEdit = function () {
+    setEditMovementModal((prevState) => !prevState);
+  };
 
   return (
     <div className={styles.movementContainer}>
-        {date}, {operation}, {amount}, {details}, {category} {
-          edit &&
-          <div>
-            <button onClick={() => handleEdit(id)}>edit</button>
-            <button onClick={() => handledelete(id)}>delete</button>
-          </div>
-          
-        }
+      <div className={styles.movSmallContainer}>
+        <div>
+          {date}
+        </div>
+        <div className={(operation === 'out' ? styles.out : styles.in )}>
+          {amount}
+        </div>
+        <div>
+          {details}
+        </div>
+        <div>
+          {category}
+        </div>
+      </div>
+      {
+        edit &&
+        <div>
+          <button onClick={onClickEdit}>edit</button>
+          <button onClick={() => handledelete(id)}>delete</button>
+        </div>
+      }
+      {!!editMovementModal && (
+        <Modal setLocalModal={setEditMovementModal}>
+          <EditOperation 
+            setLocalModal={setEditMovementModal}
+            id= {id}
+            amount= {amount}
+            operation= {operation}
+            details= {details}
+            category= {category}
+            date= {date}
+          />
+        </Modal>
+      )}
     </div>
   )
 }

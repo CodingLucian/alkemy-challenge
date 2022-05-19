@@ -1,0 +1,12 @@
+.allOpContainer{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background-color: rgb(193, 245, 252);
+  padding: 100px;
+  border-radius: 10px;
+  border: 2px solid black;
+  /* width: fit-content; */
+  
+}
+

@@ -1,5 +1,25 @@
 .movementContainer{
+  /* display: flex;
+  flex-direction: row; */
+  /* justify-content: space-between; */
+}
+
+.movSmallContainer{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  border: 2px solid rgb(57, 57, 57);
+  width: 300px;
+  margin-bottom: 5px;
+  padding: 5px;
+  justify-content: space-around;
+}
+
+.out{
+  color: red;
+  font-weight: bold;
+}
+
+.in{
+  color: green;
+  font-weight: bold;
 }

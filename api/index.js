@@ -52,14 +52,15 @@ router.get('/movement/:id', async (req, res, next) => {
 router.put('/movement/:id', async (req, res, next) => {
     try {
         let id = req.params.id
-        const {category, details, date, amount/* , operation */ } = req.body;
+        let {category, details, date, amount, operation } = req.body;
+        if(operation === 'out') amount = -amount;
         await Movement.update(
             {
                 category,
                 details,
                 date,
                 amount,
-                // operation
+                operation
             },
             {where: 
                 {id: id}});

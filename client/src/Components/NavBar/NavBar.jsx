@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from '../Modal/Modal'
 import NewOperation from '../NewOperation/NewOperation';
 import AllOperations from '../AllOperations/AllOperations';
-
+import styles from './NavBar.module.css';
 
 export default function NavBar() {
 
@@ -19,15 +19,15 @@ export default function NavBar() {
     
     return ( 
         <div>
-          <div>
-            <div><button onClick={onClickAll}>All Operations</button></div>
-            <div><button onClick={onClickNew}>New Operation</button></div>
+          <div className={styles.menuContainer}>
+            <div><button className={styles.navBtn} onClick={onClickAll}>All Operations</button></div>
+            <div><button className={styles.navBtn} onClick={onClickNew}>New Operation</button></div>
           </div>
           {!!allMovementsModal && (
             <Modal setLocalModal={setAllMovementsModal}>
               <AllOperations />
             </Modal>
-          )}
+          )} 
           {!!newMovementModal && (
             <Modal setLocalModal={setNewMovementsModal}>
               <NewOperation />

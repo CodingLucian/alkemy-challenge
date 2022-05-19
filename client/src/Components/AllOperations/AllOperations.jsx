@@ -1,14 +1,15 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { GlobalContext } from '../../GlobalContext/GlobalContext';
-import Movement from '../Movement/Movement'
+import Movement from '../Movement/Movement';
+import styles from './AllOperations.module.css';
 
 export default function AllOperations() {
 
   const { getMovements, allMovements } = useContext(GlobalContext);
-  const [ filteredMovements, setFilteredMovements ] = useState([...allMovements.movements])
+  const [ filteredMovements, setFilteredMovements ] = useState([])
 
   useEffect(()=>{
-    setFilteredMovements([...allMovements?.movements]);
+    allMovements?.movements?.length && setFilteredMovements([...allMovements?.movements]);
   },[allMovements])
 
   // useEffect(()=>{
@@ -30,7 +31,7 @@ export default function AllOperations() {
   }
 
   return (
-    <div>
+    <div className={styles.allOpContainer}>
       <div>
         <select name="opType" placeholder='select operation type' onChange={(e) => handlefilter(e.target.value)}>
           <option value="all">all operations</option>
@@ -39,7 +40,7 @@ export default function AllOperations() {
         </select>
       </div>
       <div>{
-        filteredMovements?.length && filteredMovements.map((m)=>{
+        filteredMovements?.length ? ( filteredMovements.map((m)=>{
           return <Movement 
             key={m.id}
             id= {m.id}
@@ -50,7 +51,7 @@ export default function AllOperations() {
             date= {m.date}
             edit= 'true'
           />
-        })
+        })):(<div>No registered operations</div> )
       }
       </div>
     </div>

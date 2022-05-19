@@ -2,6 +2,7 @@ import React, { useState, createContext, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import styles from './GlobalContext.module.css';
 
+
 export const GlobalContext = createContext();
 
 export const ContextProvider = (props) => {
@@ -82,14 +83,6 @@ export const ContextProvider = (props) => {
     })
   }
 
-  // Operation Edition 
-  const handleEdit = (id) => {
-
-  }
-
- 
-
-
 
   // useEffect(()=>{
   //   console.log('lastMov', lastMov)
@@ -106,7 +99,6 @@ export const ContextProvider = (props) => {
         allMovements, 
         setAllMovements,
         lastMov,
-        handleEdit, 
         handledelete
       }}
     >

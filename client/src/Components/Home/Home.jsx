@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../GlobalContext/GlobalContext';
 import Movement from '../Movement/Movement';
+import NavBar from '../NavBar/NavBar';
+import styles from './Home.module.css';
 
 
 export default function Home() {
@@ -10,12 +12,14 @@ export default function Home() {
   useEffect(()=>{
     getMovements()
   },[])
-
+ 
   return (
-    <div>
+    <div className={styles.homeContainer}>
+      <h1>Personal Finance</h1>
+      <NavBar/>
       <h3>Last 10 operations:</h3>
-      <div>{
-        lastMov?.length && lastMov.map((m)=>{
+      <div className={styles.tenOpContainer}>{
+        lastMov?.length ? ( lastMov.map((m)=>{
           return <Movement 
             key={m.id}
             id= {m.id}
@@ -25,12 +29,11 @@ export default function Home() {
             category= {m.category}
             date= {m.date}
           />
-        })
+        })):(<div>No registered operations</div> )
       }</div>
-      <h1>Updated Balance:</h1>
-      <div>{
-        allMovements?.balance && <h1>{allMovements.balance}</h1>
-      }</div>
+      <h1>Your Balance: {
+        allMovements?.balance && <> ${allMovements.balance}</>
+      }</h1>
     </div>
   )
 }
