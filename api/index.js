@@ -89,9 +89,5 @@ router.delete('/movement/:id', async (req, res, next) => {
 
 router.listen(3001, () => {
     console.log('server running on port 3001');
-    db.sync({force: true});
+    db.sync({force: false});
 });
-
-// module.exports = {
-//     router
-// }

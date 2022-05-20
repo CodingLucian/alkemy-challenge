@@ -48,7 +48,6 @@ export default function EditOperation({id, amount, operation, details, category,
         fetch(`http://localhost:3001/movement/${id}`, {
           method: 'PUT',
           headers: {
-            // api: `${import.meta.env.VITE_API}`,
             // Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',
           },
@@ -66,7 +65,6 @@ export default function EditOperation({id, amount, operation, details, category,
         setInput({ ...input, [e.target.name]: e.target.value });
         let objError = validate({ ...input, [e.target.name]: e.target.value });
         setError(objError);
-        // console.log(input);
       };
     
       const confirmSubmit = (e) => {
@@ -74,20 +72,17 @@ export default function EditOperation({id, amount, operation, details, category,
         Swal.fire({
           title: 'Are you sure you want to commit the changes to this operation?',
           showDenyButton: true,
-          // showCancelButton: true,
           confirmButtonText: 'Yes',
           denyButtonText: 'No',
           customClass: {
             actions: 'my-actions',
-            // cancelButton: 'order-1 right-gap',
             confirmButton: 'order-2',
             denyButton: 'order-3',
           }
         }).then((result) => {
           if (result.isConfirmed) {
             handleSubmit(e)
-          } else if (result.isDenied) {
-            // Swal.fire('Changes are not saved', '', 'info')
+          // } else if (result.isDenied) {
           }
         })
       }

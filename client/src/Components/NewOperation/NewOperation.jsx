@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styles from './NewOperation.module.css';
 import { GlobalContext } from '../../GlobalContext/GlobalContext';
-import { format } from 'date-fns';
-
 
 export function validate(input) {
   let errores = {};
@@ -30,7 +28,6 @@ export default function NewOperation() {
   let [error, setError] = useState({});
   const actualDate = new Date(); 
   const today = actualDate.toLocaleDateString('en-CA')
-  // console.log('today', today)
   const initialState = {
     operation: '',
     amount: '',
@@ -46,10 +43,6 @@ export default function NewOperation() {
   useEffect(() => {
     setInput(initialState);
   }, []);
-
-  // useEffect(()=>{
-  //   console.log('input', input)
-  // },[input])
 
   let handleSubmit = (e) => {
         e.preventDefault();

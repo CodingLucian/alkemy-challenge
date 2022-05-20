@@ -5,20 +5,14 @@ import styles from './AllOperations.module.css';
 
 export default function AllOperations() {
 
-  const { getMovements, allMovements } = useContext(GlobalContext);
+  const { allMovements } = useContext(GlobalContext);
   const [ filteredMovements, setFilteredMovements ] = useState([])
 
   useEffect(()=>{
     allMovements?.movements?.length && setFilteredMovements([...allMovements?.movements]);
   },[allMovements])
 
-  // useEffect(()=>{
-  //   console.log('filteredMovements', filteredMovements)
-  // }, [filteredMovements])
-
-
   const handlefilter = (e) => {
-    // e.preventDefault();
     if(e === 'all'){
       setFilteredMovements([...allMovements?.movements]);
     }else if(e === 'moneyIn'){

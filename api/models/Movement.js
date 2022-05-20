@@ -25,11 +25,7 @@ module.exports = db => {
         },
         date: {
             type: DataTypes.DATEONLY,
-            // allowNull: false
         },
     },
-    // {
-    //     timestamps: false,
-    // }
     )
 }; 
