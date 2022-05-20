@@ -83,41 +83,47 @@ export default function NewOperation() {
       <div className={styles.formulario}>
         <h1>New Transaction:</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div>{/* operation type */}
-            <label>operation type: </label>
-            <select name="operation" onChange={(e) => handleChange(e)}>
-              <option value="null">Select...</option>
-              <option value="in">money in</option>
-              <option value="out">money out</option>
-            </select>
-            {error.operation && <p className={styles.error}>{error.operation}</p>}
+          <div className={styles.selects2}>
+            <div className={styles.col}>
+              <div className={styles.selects}>{/* operation type */}
+                <label className={styles.selTxt}>operation type: </label>
+                <select name="operation" onChange={(e) => handleChange(e)}>
+                  <option value="null">Select...</option>
+                  <option value="in">Income</option>
+                  <option value="out">Expense</option>
+                </select>
+              </div>
+              {error.operation && <p className={styles.error}>{error.operation}</p>}
+            </div> 
+            <div className={styles.col}>
+              <div className={styles.selects}>{/* category */}
+                <label className={styles.selTxt}>category: </label>
+                <select name="category" onChange={(e) => handleChange(e)}>
+                  <option value="null">Select...</option>
+                  <option value="food">food</option>
+                  <option value="taxes">taxes</option>
+                  <option value="extras">extras</option>
+                  <option value="work">work</option>
+                  <option value="rent">rent</option>
+                  <option value="other">other</option>
+                </select>
+              </div>
+              {error.category && <p className={styles.error}>{error.category}</p>}
+            </div>  
+          </div> 
+          <div className={styles.input}>{/* details */}
+            <label>Op. Details: </label>
+            <input
+              type={'text'}
+              name={'details'}
+              onChange={(e) => handleChange(e)}
+              placeholder="details..."
+            />
+            {error.details && (
+              <p className={styles.error}>{error.details}</p>
+            )}
           </div>
-          <div>{/* category */}
-            <label>category: </label>
-            <select name="category" onChange={(e) => handleChange(e)}>
-              <option value="null">Select...</option>
-              <option value="food">food</option>
-              <option value="taxes">taxes</option>
-              <option value="extras">extras</option>
-              <option value="work">work</option>
-              <option value="rent">rent</option>
-              <option value="other">other</option>
-            </select>
-            {error.category && <p className={styles.error}>{error.category}</p>}
-          </div>
-          <div>{/* details */}
-             <label>Op. Details: </label>
-             <input
-               type={'text'}
-               name={'details'}
-               onChange={(e) => handleChange(e)}
-               placeholder="details..."
-             />
-             {error.details && (
-               <p className={styles.error}>{error.details}</p>
-             )}
-          </div>
-          <div>{/* amount */}
+          <div className={styles.input}>{/* amount */}
              <label>amount: </label>
              <input
                type="number"
@@ -129,7 +135,7 @@ export default function NewOperation() {
                <p className={styles.error}>{error.amount}</p>
              )}
           </div>
-          <div>{/* date */}
+          <div className={styles.input}>{/* date */}
             <label>date: </label>
             <input
               type="date"
@@ -145,7 +151,8 @@ export default function NewOperation() {
             error.operation ||
             error.category ||
             error.details ||
-            error.amount
+            error.amount ||
+            input.amount === ''
             ? null : (
             <button className={styles.butoncito} type="submit">
               submit

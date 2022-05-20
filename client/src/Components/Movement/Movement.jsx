@@ -17,27 +17,28 @@ export default function Movement({id, amount, operation, details, category, date
 
   return (
     <div className={styles.movementContainer}>
-      <div className={styles.movSmallContainer}>
-        <div>
-          {date}
+      <div className={styles.line}>
+        <div className={styles.movSmallContainer}>
+          <div>
+            {date}
+          </div>
+          <div className={(operation === 'out' ? styles.out : styles.in )}>
+            {amount}
+          </div>
+          <div>
+            {details}
+          </div>
+          <div>
+            {category}
+          </div>
         </div>
-        <div className={(operation === 'out' ? styles.out : styles.in )}>
-          {amount}
-        </div>
-        <div>
-          {details}
-        </div>
-        <div>
-          {category}
-        </div>
-      </div>
-      {
-        edit &&
-        <div>
-          <button onClick={onClickEdit}>edit</button>
-          <button onClick={() => handledelete(id)}>delete</button>
-        </div>
-      }
+        {
+          edit &&
+          <div className={styles.btns}>
+            <button className={styles.btn} onClick={onClickEdit}>edit</button>
+            <button className={styles.btn} onClick={() => handledelete(id)}>delete</button>
+          </div>
+      }</div>
       {!!editMovementModal && (
         <Modal setLocalModal={setEditMovementModal}>
           <EditOperation 

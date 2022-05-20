@@ -32,7 +32,8 @@ export default function AllOperations() {
 
   return (
     <div className={styles.allOpContainer}>
-      <div>
+      <h1>All Operations</h1>
+      <div className={styles.select}>
         <select name="opType" placeholder='select operation type' onChange={(e) => handlefilter(e.target.value)}>
           <option value="all">all operations</option>
           <option value="moneyIn">money In</option>

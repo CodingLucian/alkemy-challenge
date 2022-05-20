@@ -9,6 +9,7 @@
   flex-direction: row;
   border: 2px solid rgb(57, 57, 57);
   width: 300px;
+  height: max-content;
   margin-bottom: 5px;
   padding: 5px;
   justify-content: space-around;
@@ -22,4 +23,41 @@
 .in{
   color: green;
   font-weight: bold;
+}
+
+.line{
+  display: flex;
+  flex-direction: row;
+  
+}
+
+@media only screen and (max-width: 474px) {
+  .line{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* .btns{
+
+} */
+
+.btn {
+  /* display: block; */
+  margin: 10px;
+  background: #0085ff;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  border: none;
+  cursor: pointer;
+  width: auto;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  transition: 0.3s ease all;
+}
+
+.btn:hover {
+  background: #0051ff;
 }

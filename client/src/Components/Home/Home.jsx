@@ -17,9 +17,10 @@ export default function Home() {
     <div className={styles.homeContainer}>
       <h1>Personal Finance</h1>
       <NavBar/>
-      <h3>Last 10 operations:</h3>
-      <div className={styles.tenOpContainer}>{
-        lastMov?.length ? ( lastMov.map((m)=>{
+      
+      <div className={styles.tenOpContainer}>
+        <h3>Last 10 operations:</h3>
+        {lastMov?.length ? ( lastMov.map((m)=>{
           return <Movement 
             key={m.id}
             id= {m.id}
@@ -31,9 +32,9 @@ export default function Home() {
           />
         })):(<div>No registered operations</div> )
       }</div>
-      <h1>Your Balance: {
-        allMovements?.balance && <> ${allMovements.balance}</>
-      }</h1>
+      <h2 className={styles.line}>Your Balance: {
+        allMovements?.balance && allMovements.balance > 0 ? <div> ${allMovements.balance}</div> : <div className={styles.red}> ${allMovements.balance}</div>
+      }</h2>
     </div>
   )
 }

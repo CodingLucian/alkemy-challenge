@@ -2,11 +2,27 @@
   display: flex;
   flex-direction: column;
   align-content: center;
-  background-color: rgb(193, 245, 252);
+  background-color: rgb(255, 255, 255);
   padding: 100px;
   border-radius: 10px;
   border: 2px solid black;
-  /* width: fit-content; */
-  
+  min-width: 360px;
+  max-width: 720px;
+  min-height: 360px;
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
+@media only screen and (max-width: 652px) {
+  .allOpContainer{
+    padding: 10px;
+  }
+}
+
+.select{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+  align-content: center;
+}

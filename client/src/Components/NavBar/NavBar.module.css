@@ -3,22 +3,27 @@
   flex-direction: row;
 }
 
-.navBtn{
-  margin: 5px;
-  padding: 4px;
-  border: 2px solid white;
+
+
+
+
+.navBtn {
+  display: block;
+  background: #0085ff;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  border: none;
+  cursor: pointer;
+  width: auto;
+  padding: 10px;
   border-radius: 5px;
-  background-color: rgb(87, 87, 243);
-  color: beige;
-  font-variant: small-caps;
+  color: #fff;
+  font-size: 16px;
+  transition: 0.3s ease all;
+  margin-bottom: 10px;
+  margin-right: 5px;
 }
 
-.navBtn:hover{
-  margin: 5px;
-  padding: 4px;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 5px;
-  background-color: rgb(198, 198, 249);
-  color: rgb(0, 0, 0);
-  font-variant: small-caps;
+.navBtn:hover {
+  background: #0051ff;
 }
