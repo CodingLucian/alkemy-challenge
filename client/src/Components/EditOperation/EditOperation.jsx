@@ -22,8 +22,6 @@ export function validate(input) {
 }
 
 export default function EditOperation({id, amount, operation, details, category, date, setLocalModal}) {
-
-  console.log('operation', operation)
   let [error, setError] = useState({});
   const initialState = {
     id: id,
@@ -35,7 +33,7 @@ export default function EditOperation({id, amount, operation, details, category,
   };
   let [input, setInput] = useState(initialState);
 
-  const { getMovements } = useContext(GlobalContext);
+  const { getMovements, editOperation } = useContext(GlobalContext);
 
       
   useEffect(() => {
@@ -44,19 +42,7 @@ export default function EditOperation({id, amount, operation, details, category,
 
   let handleSubmit = (e) => {
         e.preventDefault();
-        // let token = localStorage.getItem('tokenProp');
-        fetch(`http://localhost:3001/movement/${id}`, {
-          method: 'PUT',
-          headers: {
-            // Authorization: 'Bearer ' + token,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(input),
-        })
-        .then(() => Swal.fire('Edited!', '', 'success'))
-        .then((data) => getMovements())
-        .then(setLocalModal((prev) => !prev))
-        .catch((error) => console.log(error));
+        editOperation(id, input, setLocalModal);
         setInput(initialState);
         e.target.reset();
       };

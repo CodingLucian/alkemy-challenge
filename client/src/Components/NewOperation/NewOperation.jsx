@@ -37,33 +37,21 @@ export default function NewOperation() {
   };
   let [input, setInput] = useState(initialState);
 
-  const { getMovements } = useContext(GlobalContext);
+  const { getMovements, postOperation } = useContext(GlobalContext);
 
       
   useEffect(() => {
     setInput(initialState);
   }, []);
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
         e.preventDefault();
-        // let token = localStorage.getItem('tokenProp');
-        fetch(`http://localhost:3001/movement`, {
-          method: 'POST',
-          headers: {
-            // api: `${import.meta.env.VITE_API}`,
-            // Authorization: 'Bearer ' + token,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(input),
-        })
-          .then((response) => response.json())
-          .then((data) => getMovements())
-          .catch((error) => console.log(error));
+        postOperation(input)
         setInput(initialState);
         e.target.reset();
       };
     
-  let handleChange = (e) => {
+  const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
     let objError = validate({ ...input, [e.target.name]: e.target.value });
     setError(objError);

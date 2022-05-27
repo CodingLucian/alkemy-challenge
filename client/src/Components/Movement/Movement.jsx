@@ -6,7 +6,7 @@ import EditOperation from '../EditOperation/EditOperation';
 
 export default function Movement({id, amount, operation, details, category, date, edit}) {
 
-  const { handledelete } = useContext(GlobalContext);
+  const { deleteOperation } = useContext(GlobalContext);
  
   // Operation Edition 
   const [editMovementModal, setEditMovementModal] = useState(false);
@@ -36,7 +36,7 @@ export default function Movement({id, amount, operation, details, category, date
           edit &&
           <div className={styles.btns}>
             <button className={styles.btn} onClick={onClickEdit}>edit</button>
-            <button className={styles.btn} onClick={() => handledelete(id)}>delete</button>
+            <button className={styles.btn} onClick={() => deleteOperation(id)}>delete</button>
           </div>
       }</div>
       {!!editMovementModal && (
