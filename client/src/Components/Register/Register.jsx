@@ -3,7 +3,6 @@ import { GlobalContext } from '../../GlobalContext/GlobalContext';
 import styles from './Register.module.css'
 import { Link } from 'react-router-dom';
 
-
 const validate = (input) =>{
   let errors = {};
 
@@ -88,7 +87,8 @@ export default function Register() {
               <p className={styles.error}>{error.password}</p>
             )}
           </div>
-          <div> {       
+          <div> {/* submit */}
+            {       
             error.fullname ||
             error.email ||
             error.password 

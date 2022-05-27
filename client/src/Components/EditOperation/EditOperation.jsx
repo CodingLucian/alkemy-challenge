@@ -33,7 +33,7 @@ export default function EditOperation({id, amount, operation, details, category,
   };
   let [input, setInput] = useState(initialState);
 
-  const { getMovements, editOperation } = useContext(GlobalContext);
+  const { editOperation } = useContext(GlobalContext);
 
       
   useEffect(() => {
@@ -68,12 +68,9 @@ export default function EditOperation({id, amount, operation, details, category,
         }).then((result) => {
           if (result.isConfirmed) {
             handleSubmit(e)
-          // } else if (result.isDenied) {
           }
         })
       }
-
-
 
   return (
     <div className={styles.allcss}>
@@ -135,7 +132,8 @@ export default function EditOperation({id, amount, operation, details, category,
               <p className={styles.error}>{error.date}</p>
             )}
           </div>
-          <div> {       
+          <div>{/* submit */}
+            {       
             error.category ||
             error.details ||
             error.amount

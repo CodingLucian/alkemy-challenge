@@ -2,7 +2,7 @@ import Home from './Components/Home/Home';
 import styles from './App.module.css';
 import Login from './Components/Login/Login.jsx'
 import Register from './Components/Register/Register';
-import { /* Redirect, */ Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 
 export default function App() {

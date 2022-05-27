@@ -37,7 +37,7 @@ export default function NewOperation() {
   };
   let [input, setInput] = useState(initialState);
 
-  const { getMovements, postOperation } = useContext(GlobalContext);
+  const { postOperation } = useContext(GlobalContext);
 
       
   useEffect(() => {
@@ -55,7 +55,6 @@ export default function NewOperation() {
     setInput({ ...input, [e.target.name]: e.target.value });
     let objError = validate({ ...input, [e.target.name]: e.target.value });
     setError(objError);
-    // console.log(input);
   };
     
 
@@ -65,8 +64,8 @@ export default function NewOperation() {
         <h1>New Transaction:</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.selects2}>
-            <div className={styles.col}>
-              <div className={styles.selects}>{/* operation type */}
+            <div className={styles.col}>{/* operation type */}
+              <div className={styles.selects}>
                 <label className={styles.selTxt}>operation type: </label>
                 <select name="operation" onChange={(e) => handleChange(e)}>
                   <option value="null">Select...</option>
@@ -76,8 +75,8 @@ export default function NewOperation() {
               </div>
               {error.operation && <p className={styles.error}>{error.operation}</p>}
             </div> 
-            <div className={styles.col}>
-              <div className={styles.selects}>{/* category */}
+            <div className={styles.col}>{/* category */}
+              <div className={styles.selects}>
                 <label className={styles.selTxt}>category: </label>
                 <select name="category" onChange={(e) => handleChange(e)}>
                   <option value="null">Select...</option>

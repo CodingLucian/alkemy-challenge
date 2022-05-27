@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext } from 'react';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
@@ -7,7 +7,6 @@ export const GlobalContext = createContext();
 export const ContextProvider = (props) => {
   const [allMovements, setAllMovements] = useState([]);
   const [lastMov, setLastMov] = useState([]);
-  const history = useHistory();
 
   // get from DB
   const getMovements = () => {
@@ -17,7 +16,6 @@ export const ContextProvider = (props) => {
       {
         method: 'GET',
         headers: {
-          // api: `${import.meta.env.VITE_API}`,
           Authorization: 'Bearer ' + token,
           UserName: userName,
           'Content-Type': 'application/json',
@@ -55,7 +53,6 @@ export const ContextProvider = (props) => {
       {
         method: 'DELETE',
         headers: {
-          // api: `${import.meta.env.VITE_API}`,
           Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
@@ -99,7 +96,6 @@ export const ContextProvider = (props) => {
     fetch(`http://localhost:3001/movement`, {
       method: 'POST',
       headers: {
-        // api: `${import.meta.env.VITE_API}`,
         Authorization: 'Bearer ' + token,
         username: username,
         'Content-Type': 'application/json',
@@ -127,13 +123,10 @@ export const ContextProvider = (props) => {
         .catch((error) => console.log(error));
   }
   const register = (user) => {
-    // let token = localStorage.getItem('tokenProp');
     console.log('user register globalcontext--> ', user)
     fetch(`http://localhost:3001/user/register`, {
       method: 'POST',
       headers: {
-        // api: `${import.meta.env.VITE_API}`,
-        // Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
@@ -147,13 +140,10 @@ export const ContextProvider = (props) => {
   };
 
   const login = (user) => {
-    // let token = localStorage.getItem('tokenProp');
     console.log('user login globalcontext--> ', user)
     fetch(`http://localhost:3001/user/login`, {
       method: 'POST',
       headers: {
-        // api: `${import.meta.env.VITE_API}`,
-        // Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
@@ -171,8 +161,6 @@ export const ContextProvider = (props) => {
           Swal.fire('Invalid user or password!', '', 'success');
         }
     })
-      // .then((data)=>history.push("/"))
-      // .then((data) => getMovements())
       .catch((error) => console.log(error));
   };
 
@@ -182,25 +170,6 @@ export const ContextProvider = (props) => {
     window.localStorage.removeItem('tokenProp');
     window.localStorage.removeItem('refreshTokenProp');
     window.location.replace('/');
-    // let token = localStorage.getItem('refreshTokenProp');
-    // fetch(`http://localhost:3001/user/logout`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     Authorization: 'Bearer ' + token,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   // body: JSON.stringify(user),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {  
-    //     if (data.redirect) {
-    //       window.location.replace(data.redirect);
-    //     }else{
-    //       console.log('no existe ese usuario')
-    //       Swal.fire('Invalid user or password!', '', 'success');
-    //     }
-    // })
-    //   .catch((error) => console.log(error));
   };
 
   return (
