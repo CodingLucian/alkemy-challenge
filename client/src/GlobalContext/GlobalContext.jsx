@@ -33,6 +33,8 @@ export const ContextProvider = (props) => {
             setLastMov(aux.slice((aux.length - 10), aux.length))
           }
         } else {
+          setAllMovements([]);
+          setLastMov([]);
           console.log("No Movements Found");
         }
       })
@@ -60,6 +62,7 @@ export const ContextProvider = (props) => {
     )
       .then(() => Swal.fire('Deleted!', '', 'success'))
       .then(()=> getMovements())
+      .then(()=> console.log('allMovements ', allMovements))
       .catch((err) => {
         if (err.response) {
           const { response } = err;

@@ -9,7 +9,8 @@ export default function AllOperations() {
   const [ filteredMovements, setFilteredMovements ] = useState([])
 
   useEffect(()=>{
-    allMovements?.movements?.length && setFilteredMovements([...allMovements?.movements]);
+    allMovements?.movements?.length ? setFilteredMovements([...allMovements?.movements]):
+    setFilteredMovements([]);
   },[allMovements])
 
   const handlefilter = (e) => {
