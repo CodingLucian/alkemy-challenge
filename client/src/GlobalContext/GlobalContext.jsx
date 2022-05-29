@@ -11,13 +11,13 @@ export const ContextProvider = (props) => {
   // get from DB
   const getMovements = () => {
     let token = localStorage.getItem('tokenProp');
-    let userName = localStorage.getItem('userName');
+    let useremail = localStorage.getItem('userEmail');
     fetch(`http://localhost:3001/movement/`,
       {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
-          UserName: userName,
+          useremail: useremail,
           'Content-Type': 'application/json',
         },
       }
@@ -95,12 +95,12 @@ export const ContextProvider = (props) => {
   //Operation post
   const postOperation = (input) => {
     let token = localStorage.getItem('tokenProp');
-    let username = localStorage.getItem('userName');
+    let useremail = localStorage.getItem('userEmail');
     fetch(`http://localhost:3001/movement`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
-        username: username,
+        useremail: useremail,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
@@ -136,8 +136,9 @@ export const ContextProvider = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('register response data ', data)
-        window.location.replace(data.redirect);
+        console.log('register response data ', data.msg)
+        data?.msg === 'user created' ? window.location.replace(data.redirect):
+        (Swal.fire('An user with that Email allready Exists!', '', 'error'))
       })
       .catch((error) => console.log(error));
   };
@@ -157,6 +158,7 @@ export const ContextProvider = (props) => {
         if(data.accessToken) window.localStorage.setItem('tokenProp', data.accessToken);
         if(data.refreshToken) window.localStorage.setItem('refreshTokenProp', data.refreshToken);
         if(data.userName) window.localStorage.setItem('userName', data.userName);
+        if(data.userEmail) window.localStorage.setItem('userEmail', data.userEmail);
         if (data.redirect) {
           window.location.replace(data.redirect);
         }else{
@@ -168,10 +170,9 @@ export const ContextProvider = (props) => {
   };
 
   const logout = () => {
-    window.localStorage.removeItem('imgAvatar');
-    window.localStorage.removeItem('nombrerol');
+    window.localStorage.removeItem('userName');
     window.localStorage.removeItem('tokenProp');
-    window.localStorage.removeItem('refreshTokenProp');
+    window.localStorage.removeItem('userEmail');
     window.location.replace('/');
   };
 

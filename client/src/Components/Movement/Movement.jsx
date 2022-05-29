@@ -4,7 +4,7 @@ import { GlobalContext } from '../../GlobalContext/GlobalContext';
 import { Modal } from '../ModalEdit/ModalEdit';
 import EditOperation from '../EditOperation/EditOperation';
 
-export default function Movement({id, amount, operation, details, category, date, edit}) {
+export default function Movement({id, amount, operation, details, category, date, edit, completeDetails}) {
 
   const { deleteOperation } = useContext(GlobalContext);
  
@@ -46,7 +46,7 @@ export default function Movement({id, amount, operation, details, category, date
             id= {id}
             amount= {amount}
             operation= {operation}
-            details= {details}
+            details= {completeDetails}
             category= {category}
             date= {date}
           />

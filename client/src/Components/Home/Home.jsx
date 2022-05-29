@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <div className={styles.homeContainer}>
-        <h1>Personal Finance</h1>
+        <h1>Personal Finance for {localStorage.getItem('userName')}</h1>
         <NavBar/>
         <div className={styles.tenOpContainer}>
           <h3>Last 10 operations:</h3>
@@ -26,7 +26,7 @@ export default function Home() {
               id= {m.id}
               amount= {m.amount}
               operation= {m.operation}
-              details= {m.details}
+              details= {m.details.length > 15 ? `${m.details.substring(0, 15)}...` : m.details}
               category= {m.category}
               date= {m.date}
             />

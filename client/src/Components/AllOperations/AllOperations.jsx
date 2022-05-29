@@ -42,7 +42,8 @@ export default function AllOperations() {
             id= {m.id}
             amount= {m.amount}
             operation= {m.operation}
-            details= {m.details}
+            details= {m.details.length > 15 ? `${m.details.substring(0, 15)}...` : m.details}
+            completeDetails= {m.details}
             category= {m.category}
             date= {m.date}
             edit= 'true'

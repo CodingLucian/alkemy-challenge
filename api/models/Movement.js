@@ -26,7 +26,7 @@ module.exports = db => {
         date: {
             type: DataTypes.DATEONLY,
         },
-        username: {
+        useremail: {
             type: DataTypes.STRING,
             allowNull: false,
         }
