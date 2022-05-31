@@ -1,6 +1,9 @@
 import React, { useState, createContext } from 'react';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+// import dotenv from 'dotenv';
+// dotenv.config();
+
+const URL = process.env.REACT_APP_URL;
 
 export const GlobalContext = createContext();
 
@@ -12,7 +15,7 @@ export const ContextProvider = (props) => {
   const getMovements = () => {
     let token = localStorage.getItem('tokenProp');
     let useremail = localStorage.getItem('userEmail');
-    fetch(`http://localhost:3001/movement/`,
+    fetch(`${URL}/movement/`,
       {
         method: 'GET',
         headers: {
@@ -51,7 +54,7 @@ export const ContextProvider = (props) => {
   // DB deletion
   const deleteMovements = (id) => {
     let token = localStorage.getItem('tokenProp');
-    fetch(`http://localhost:3001/movement/${id}`,
+    fetch(`${URL}/movement/${id}`,
       {
         method: 'DELETE',
         headers: {
@@ -96,7 +99,7 @@ export const ContextProvider = (props) => {
   const postOperation = (input) => {
     let token = localStorage.getItem('tokenProp');
     let useremail = localStorage.getItem('userEmail');
-    fetch(`http://localhost:3001/movement`, {
+    fetch(`${URL}/movement`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -112,7 +115,7 @@ export const ContextProvider = (props) => {
 
   const editOperation = (id, input, setLocalModal) => {
     let token = localStorage.getItem('tokenProp');
-    fetch(`http://localhost:3001/movement/${id}`, {
+    fetch(`${URL}/movement/${id}`, {
           method: 'PUT',
           headers: {
             Authorization: 'Bearer ' + token,
@@ -125,9 +128,10 @@ export const ContextProvider = (props) => {
         .then(setLocalModal((prev) => !prev))
         .catch((error) => console.log(error));
   }
+
   const register = (user) => {
     console.log('user register globalcontext--> ', user)
-    fetch(`http://localhost:3001/user/register`, {
+    fetch(`${URL}/user/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +149,7 @@ export const ContextProvider = (props) => {
 
   const login = (user) => {
     console.log('user login globalcontext--> ', user)
-    fetch(`http://localhost:3001/user/login`, {
+    fetch(`${URL}/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

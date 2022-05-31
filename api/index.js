@@ -4,10 +4,31 @@ const { Movement, db, Users } = require("./db.js");
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+require('dotenv').config();
+
+const {
+    PORT
+} = process.env;
 
 router.use(express.json());
 router.use(cors());
 
+router.use(cors())
+router.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+router.use(bodyParser.json({ limit: '50mb' }));
+router.use(cookieParser());
+router.use(morgan('dev'));
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+ 
 // REGISTRATION
 router.post('/user/register', async (req, res) => {
     try {
@@ -141,7 +162,7 @@ router.delete('/movement/:id', async (req, res, next) => {
     }
 });
 
-router.listen(3001, () => {
-    console.log('server running on port 3001');
+router.listen(PORT, () => {
+    console.log(`server running on port ${PORT}`);
     db.sync({force: false});
 });
